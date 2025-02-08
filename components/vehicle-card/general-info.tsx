@@ -1,7 +1,8 @@
 export default function GeneralInfo() {
   return (
     <>
-      <h1 className="text-3xl font-bold text-black-600 mb-4 text-center uppercase tracking-wide">
+      <div className="h-5 border-b-2 border-blue text-2xl text-center"></div>
+      <h1 className="text-3xl font-bold text-black-600 mb-4 text-center uppercase tracking-wide mt-6">
         ΓΕΝΙΚΕΣ ΠΛΗΡΟΦΟΡΙΕΣ
       </h1>
       <div className="flex flex-col md:flex-row">
