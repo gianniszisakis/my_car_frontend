@@ -5,7 +5,7 @@ import Image from "next/image";
 
 export default function VehicleCard() {
   return (
-    <Card className="w-full lg:max-w-[1000px] max-h-[970px] md:max-h-[750px]">
+    <Card className="w-full lg:max-w-[1000px] max-h-[970px] md:max-h-[750px] lg:max-h-[650px]">
       <CardHeader>
         <CardTitle className="flex items-center gap-4">
           <Image
