@@ -5,7 +5,6 @@ type Title = "Service" | "Ασφάλεια" | "ΚΤΕΟ";
 
 interface MaintentanceInfoCardProps {
   title: Title;
-  icon: string;
   firstLabel: string;
   firstValue: string;
   secondLabel: string;

@@ -13,7 +13,6 @@ export default function Home() {
       <div className="lg:w-1/2 w-full flex flex-col">
         <div className="p-6 flex items-center justify-center text-white text-2xl">
           <MaintentanceInfoCard
-            icon=""
             title="Service"
             firstLabel="Τελευταίο Service"
             firstValue="2025-01-01"
@@ -23,7 +22,6 @@ export default function Home() {
         </div>
         <div className="p-6 flex items-center justify-center text-white text-2xl">
           <MaintentanceInfoCard
-            icon=""
             title="ΚΤΕΟ"
             firstLabel="Τελευταίο KTEO"
             firstValue="2025-01-01"
@@ -33,7 +31,6 @@ export default function Home() {
         </div>
         <div className="p-6 flex items-center justify-center text-white text-2xl">
           <MaintentanceInfoCard
-            icon=""
             title="Ασφάλεια"
             firstLabel="Εταιρία"
             firstValue="Generali"
