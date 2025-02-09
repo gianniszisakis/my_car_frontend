@@ -1,5 +1,6 @@
 import { Card, CardHeader, CardTitle, CardContent } from "../ui/card";
 import { Wrench, Shield, Book } from "lucide-react";
+import { Badge } from "../ui/badge";
 
 type Title = "Service" | "Ασφάλεια" | "ΚΤΕΟ";
 
@@ -11,6 +12,7 @@ interface MaintentanceInfoCardProps {
   secondValue: string;
   thirdLabel?: string;
   thirdValue?: string;
+  badge?: boolean;
 }
 
 export default function MaintentanceInfoCard({
@@ -21,6 +23,7 @@ export default function MaintentanceInfoCard({
   secondValue,
   thirdLabel,
   thirdValue,
+  badge = false,
 }: MaintentanceInfoCardProps) {
   function getComponentIcon(title: Title) {
     const iconMap = {
@@ -37,6 +40,14 @@ export default function MaintentanceInfoCard({
         <CardTitle className="flex items-center gap-4">
           {getComponentIcon(title)}
           {title}
+          {badge ? (
+            <Badge
+              variant="outline"
+              className="bg-green-700 text-white pb-1 pt-1"
+            >
+              ΕΝΕΡΓΗ
+            </Badge>
+          ) : null}
         </CardTitle>
       </CardHeader>
       <CardContent>

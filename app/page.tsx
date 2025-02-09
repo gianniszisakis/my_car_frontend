@@ -36,6 +36,7 @@ export default function Home() {
             firstValue="Generali"
             secondLabel="Επόμενη Ανανέωση"
             secondValue="2022-01-01"
+            badge
           />
         </div>
       </div>
