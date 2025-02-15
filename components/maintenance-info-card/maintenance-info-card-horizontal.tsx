@@ -30,6 +30,7 @@ export default function MaintentanceInfoCardHorizontal({
           <tr className="bg-gray-200">
             <th className="p-2 text-left">Τελευταίο Service</th>
             <th className="p-2 text-left">Επόμενο Service</th>
+            {thirdLabel && <th className="p-2 text-left">{thirdLabel}</th>}
             <th className="p-2 text-left"></th>
           </tr>
         </thead>
