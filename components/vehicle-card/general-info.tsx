@@ -1,3 +1,5 @@
+import vehicleData from "@/public/placeholder-data/vehicleData";
+
 export default function GeneralInfo() {
   return (
     <>
@@ -10,7 +12,9 @@ export default function GeneralInfo() {
           <p className="text-lg font-semibold">Μοντέλο:</p>
         </div>
         <div className="bg-white pl-4">
-          <p className="text-lg">Corsa</p>
+          <p className="text-lg">
+            {vehicleData?.vehicle?.model ? vehicleData?.vehicle?.model : "-"}
+          </p>
         </div>
       </div>
       <div className="flex flex-col md:flex-row">
@@ -18,7 +22,9 @@ export default function GeneralInfo() {
           <p className="text-lg font-semibold">Έτος κατασκευής:</p>
         </div>
         <div className="bg-white pl-4">
-          <p className="text-lg">2017</p>
+          <p className="text-lg">
+            {vehicleData?.vehicle?.year ? vehicleData?.vehicle?.year : "-"}
+          </p>
         </div>
       </div>
       <div className="flex flex-col md:flex-row">
@@ -26,7 +32,11 @@ export default function GeneralInfo() {
           <p className="text-lg font-semibold">Τύπος αμαξώματος:</p>
         </div>
         <div className="bg-white pl-4">
-          <p className="text-lg">hatchback</p>
+          <p className="text-lg">
+            {vehicleData?.vehicle?.body_type
+              ? vehicleData?.vehicle?.body_type
+              : "-"}
+          </p>
         </div>
       </div>
       <div className="flex flex-col md:flex-row">
@@ -34,7 +44,9 @@ export default function GeneralInfo() {
           <p className="text-lg font-semibold">Αριθμός πλαισίου (VIN):</p>
         </div>
         <div className="bg-white pl-4">
-          <p className="text-lg">230101010010101001</p>
+          <p className="text-lg">
+            {vehicleData?.vehicle?.vin ? vehicleData?.vehicle?.vin : "-"}
+          </p>
         </div>
       </div>
       <div className="h-5 border-b-2 border-blue text-2xl text-center"></div>
