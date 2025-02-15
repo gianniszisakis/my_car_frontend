@@ -1,4 +1,6 @@
-const vehicleData = {
+import { VehicleData } from "@/models/vehicleModel";
+
+const vehicleData: VehicleData = {
   vehicle: {
     model: "Corsa",
     year: "2017",
