@@ -22,14 +22,16 @@ export default function MaintentanceInfoCardHorizontal({
   secondValue,
   thirdLabel,
   thirdValue,
+  firstLabel,
+  secondLabel,
 }: MaintentanceInfoCardHorizontalProps) {
   return (
     <div className="p-6 w-full overflow-x-auto">
       <table className="w-[600px] md:w-full table-auto border-collapse border border-gray-300">
         <thead>
           <tr className="bg-gray-200">
-            <th className="p-2 text-left">Τελευταίο Service</th>
-            <th className="p-2 text-left">Επόμενο Service</th>
+            <th className="p-2 text-left">{firstLabel}</th>
+            <th className="p-2 text-left">{secondLabel}</th>
             {thirdLabel && <th className="p-2 text-left">{thirdLabel}</th>}
             <th className="p-2 text-left"></th>
           </tr>
