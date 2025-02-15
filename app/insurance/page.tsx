@@ -9,9 +9,9 @@ export default function Insurance() {
       <div className="flex flex-row h-screen">
         <MaintentanceInfoCardHorizontal
           title="Service"
-          firstLabel="Τελευταίο Service"
+          firstLabel="Ασφάλεια έως"
           firstValue="2025-01-01"
-          secondLabel="Επόμενο Service"
+          secondLabel="Επόμενή Ανανέωση"
           secondValue="2022-01-01"
           thirdLabel="Ασφαλιστική"
           thirdValue="Generali"
