@@ -1,5 +1,6 @@
 // Service interface
 export interface Service {
+  service_id: string;
   inspection_date: string;
   mileage_km: string;
   service_type: string;

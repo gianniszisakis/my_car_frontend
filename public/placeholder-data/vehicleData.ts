@@ -14,6 +14,7 @@ const vehicleData: VehicleData = {
   },
   services: [
     {
+      service_id: "a3f4c1b2e6d7f890",
       inspection_date: "12-02-2025",
       mileage_km: "20000",
       service_type: "Τακτικό",
