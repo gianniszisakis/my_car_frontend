@@ -15,6 +15,7 @@ export interface Service {
 
 // Insurance interface
 export interface Insurance {
+  insurance_id: string;
   last_insurance_date: string;
   next_renewal_date: string;
   insurance_type: string;

@@ -57,6 +57,7 @@ const vehicleData: VehicleData = {
   ],
   insurance: [
     {
+      insurance_id: "b3f4b1b2e6d7f890",
       last_insurance_date: "01-06-2024",
       next_renewal_date: "01-06-2025",
       insurance_type: "Πλήρης Κάλυψη",
