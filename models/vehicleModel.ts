@@ -13,6 +13,22 @@ export interface Service {
   };
 }
 
+// Insurance interface
+export interface Insurance {
+  last_insurance_date: string;
+  next_renewal_date: string;
+  insurance_type: string;
+  insurance_company: string;
+  glass_breakage: boolean;
+  weather_conditions: boolean;
+  fire: boolean;
+  riots: boolean;
+  theft: boolean;
+  civil_liability: boolean;
+  accident_assistance: boolean;
+  legal_protection: boolean;
+}
+
 // Vehicle interface
 export interface Vehicle {
   brand: string;
@@ -31,4 +47,5 @@ export interface Vehicle {
 export interface VehicleData {
   vehicle: Vehicle;
   services: Service[];
+  insurance: Insurance[];
 }

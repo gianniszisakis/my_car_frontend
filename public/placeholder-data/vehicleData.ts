@@ -55,6 +55,22 @@ const vehicleData: VehicleData = {
       },
     },
   ],
+  insurance: [
+    {
+      last_insurance_date: "01-06-2024",
+      next_renewal_date: "01-06-2025",
+      insurance_type: "Πλήρης Κάλυψη",
+      insurance_company: "Allianz",
+      glass_breakage: true,
+      weather_conditions: true,
+      fire: true,
+      riots: false,
+      theft: true,
+      civil_liability: true,
+      accident_assistance: true,
+      legal_protection: true,
+    },
+  ],
 };
 
 export default vehicleData;
