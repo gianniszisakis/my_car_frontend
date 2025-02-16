@@ -1,4 +1,5 @@
 import MaintentanceInfoCardHorizontal from "@/components/maintenance-info-card/maintenance-info-card-horizontal";
+import vehicleData from "@/public/placeholder-data/vehicleData";
 
 export default function Services() {
   return (
@@ -7,13 +8,9 @@ export default function Services() {
         Τα service μου
       </h1>
       <div className="flex flex-row h-screen">
-        <MaintentanceInfoCardHorizontal
-          title="Service"
-          firstLabel="Τελευταίο Service"
-          firstValue="2025-01-01"
-          secondLabel="Επόμενο Service"
-          secondValue="2022-01-01"
-        />
+        {vehicleData.services.length > 0 ? (
+          <MaintentanceInfoCardHorizontal services={vehicleData?.services} />
+        ) : null}
       </div>
     </>
   );
