@@ -20,7 +20,8 @@ const vehicleData: VehicleData = {
       mileage_km: "20000",
       service_type: "Τακτικό",
       checks: ["Λάδια", "Φίλτρο Λαδιού", "Φίλτρο Αέρα", "Φίλτρο Καμπίνας"],
-      comments: "Όλα σε καλή κατάσταση",
+      comments:
+        "Όλα σε καλή κατάσταση, Όλα σε καλή κατάσταση, Όλα σε καλή κατάσταση",
       cost_eur: "120",
       next_service: {
         mileage_km: "40000",
