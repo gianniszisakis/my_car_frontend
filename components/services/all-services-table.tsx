@@ -1,17 +1,13 @@
 "use client";
 
 import { Service } from "@/models/vehicleModel";
-import ServiceDetailsSheet from "../services/details-sheet";
+import ServiceDetailsSheet from "./details-sheet";
 
-//type Title = "Service" | "Ασφάλεια" | "ΚΤΕΟ";
-
-interface MaintentanceInfoCardHorizontalProps {
+interface AllServicesTableProps {
   services: Service[];
 }
 
-export default function MaintentanceInfoCardHorizontal({
-  services,
-}: MaintentanceInfoCardHorizontalProps) {
+export default function AllServicesTable({ services }: AllServicesTableProps) {
   return (
     <div className="p-6 w-full overflow-x-auto">
       <table className="w-[800px] md:w-full table-auto border-collapse border border-gray-300">

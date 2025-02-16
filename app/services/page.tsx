@@ -1,4 +1,4 @@
-import MaintentanceInfoCardHorizontal from "@/components/maintenance-info-card/maintenance-info-card-horizontal";
+import AllServicesTable from "@/components/services/all-services-table";
 import vehicleData from "@/public/placeholder-data/vehicleData";
 
 export default function Services() {
@@ -9,7 +9,7 @@ export default function Services() {
       </h1>
       <div className="flex flex-row h-screen">
         {vehicleData.services.length > 0 ? (
-          <MaintentanceInfoCardHorizontal services={vehicleData?.services} />
+          <AllServicesTable services={vehicleData?.services} />
         ) : null}
       </div>
     </>

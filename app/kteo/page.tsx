@@ -1,4 +1,4 @@
-import MaintentanceInfoCardHorizontal from "@/components/maintenance-info-card/maintenance-info-card-horizontal";
+import MaintentanceInfoCardHorizontal from "@/components/services/all-services-table";
 
 export default function KTEO() {
   return (
