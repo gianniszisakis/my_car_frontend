@@ -1,4 +1,5 @@
-import MaintentanceInfoCardHorizontal from "@/components/services/all-services-table";
+import AllInsurancesTable from "@/components/insurance/all-insurances-table";
+import vehicleData from "@/public/placeholder-data/vehicleData";
 
 export default function Insurance() {
   return (
@@ -7,15 +8,9 @@ export default function Insurance() {
         Οι ασφάλειές μου
       </h1>
       <div className="flex flex-row h-screen">
-        <MaintentanceInfoCardHorizontal
-          title="Service"
-          firstLabel="Ασφάλεια έως"
-          firstValue="2025-01-01"
-          secondLabel="Επόμενή Ανανέωση"
-          secondValue="2022-01-01"
-          thirdLabel="Ασφαλιστική"
-          thirdValue="Generali"
-        />
+        {vehicleData.insurance.length > 0 ? (
+          <AllInsurancesTable insurances={vehicleData?.insurance} />
+        ) : null}
       </div>
     </>
   );
