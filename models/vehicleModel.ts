@@ -15,6 +15,7 @@ export interface Service {
 
 // Vehicle interface
 export interface Vehicle {
+  brand: string;
   model: string;
   year: string;
   body_type: string;

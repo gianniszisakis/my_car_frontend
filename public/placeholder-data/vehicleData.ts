@@ -2,6 +2,7 @@ import { VehicleData } from "@/models/vehicleModel";
 
 const vehicleData: VehicleData = {
   vehicle: {
+    brand: "Opel",
     model: "Corsa",
     year: "2017",
     body_type: "hatchback",
@@ -24,6 +25,19 @@ const vehicleData: VehicleData = {
       next_service: {
         mileage_km: "40000",
         date: "22-12-2026",
+      },
+    },
+    {
+      service_id: "a3f4c1b2e6d7f891",
+      inspection_date: "12-03-2025",
+      mileage_km: "20000",
+      service_type: "Τακτικό",
+      checks: ["Λάδια", "Φίλτρο Λαδιού", "Φίλτρο Αέρα", "Φίλτρο Καμπίνας"],
+      comments: "Όλα σε καλή κατάσταση",
+      cost_eur: "120",
+      next_service: {
+        mileage_km: "40000",
+        date: "22-03-2026",
       },
     },
   ],
