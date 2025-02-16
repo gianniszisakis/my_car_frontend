@@ -2,6 +2,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import GeneralInfo from "./general-info";
 import EngineDetails from "./engine-details";
 import Image from "next/image";
+import vehicleData from "@/public/placeholder-data/vehicleData";
 
 export default function VehicleCard() {
   return (
@@ -9,12 +10,12 @@ export default function VehicleCard() {
       <CardHeader>
         <CardTitle className="flex items-center gap-4">
           <Image
-            src="https://www.carlogos.org/logo/Opel-logo.png"
-            alt="Opel Logo"
+            src={`https://www.carlogos.org/logo/${vehicleData?.vehicle?.brand}-logo.png`}
+            alt={vehicleData?.vehicle?.brand}
             width={100}
             height={100}
           />
-          Opel
+          {vehicleData?.vehicle?.brand}
         </CardTitle>
       </CardHeader>
       <CardContent>
