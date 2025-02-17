@@ -30,6 +30,15 @@ export interface Insurance {
   legal_protection: boolean;
 }
 
+// KTEO interface
+export interface Kteo {
+  kteo_id: string;
+  kteo_last_date: string;
+  kteo_next_date: string;
+  comments: string;
+  kteo_name: string;
+}
+
 // Vehicle interface
 export interface Vehicle {
   brand: string;
@@ -49,4 +58,5 @@ export interface VehicleData {
   vehicle: Vehicle;
   services: Service[];
   insurance: Insurance[];
+  kteo: Kteo[];
 }

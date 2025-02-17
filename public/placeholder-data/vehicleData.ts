@@ -72,6 +72,15 @@ const vehicleData: VehicleData = {
       legal_protection: true,
     },
   ],
+  kteo: [
+    {
+      kteo_id: "c3f4c1b2e6d7f",
+      kteo_last_date: "01-01-2024",
+      kteo_next_date: "01-01-2025",
+      comments: "Lorem Ipsum dolor sitamet",
+      kteo_name: "Autovision",
+    },
+  ],
 };
 
 export default vehicleData;
