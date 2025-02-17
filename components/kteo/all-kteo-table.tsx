@@ -2,6 +2,8 @@
 
 import { Kteo } from "@/models/vehicleModel";
 import ServiceDetailsSheet from "./details-sheet";
+import { getExpirationStatus, getStatusBadgeColor } from "@/lib/utils";
+import { Badge } from "../ui/badge";
 
 interface AllKteoTableProps {
   allKteo: Kteo[];
@@ -15,6 +17,7 @@ export default function AllKteoTable({ allKteo }: AllKteoTableProps) {
           <tr className="bg-gray-200">
             <th className="p-2 text-left">Τελευταίο ΚΤΕΟ</th>
             <th className="p-2 text-left">Επόμενο ΚΤΕΟ</th>
+            <th className="p-2 text-left">Κατάσταση</th>
             <th className="p-2 text-left"></th>
           </tr>
         </thead>
@@ -26,6 +29,16 @@ export default function AllKteoTable({ allKteo }: AllKteoTableProps) {
               </td>
               <td className="text-lg p-2 break-words">
                 {kteo?.kteo_next_date ? kteo?.kteo_next_date : "-"}
+              </td>
+              <td className="text-lg p-2 break-words">
+                <Badge
+                  variant="outline"
+                  className={`${getStatusBadgeColor(
+                    kteo?.kteo_next_date
+                  )} text-white pb-1 pt-1`}
+                >
+                  {getExpirationStatus(kteo?.kteo_next_date)}
+                </Badge>
               </td>
               <td className="text-lg p-2 break-words">
                 <ServiceDetailsSheet kteo={kteo} />

@@ -11,6 +11,8 @@ import { Button } from "../ui/button";
 import { cn } from "@/lib/utils";
 import Comments from "../comments/comments";
 import { Kteo } from "@/models/vehicleModel";
+import { getExpirationStatus, getStatusBadgeColor } from "@/lib/utils";
+import { Badge } from "../ui/badge";
 
 interface KteoDetailsSheetProps {
   kteo: Kteo;
@@ -24,7 +26,19 @@ export default function ServiceDetailsSheet({ kteo }: KteoDetailsSheetProps) {
       </SheetTrigger>
       <SheetContent className={cn("w-full sm:max-w-[600px] overflow-y-auto")}>
         <SheetHeader>
-          <SheetTitle>KTEO</SheetTitle>
+          <SheetTitle>
+            <div className="flex flex-row">
+              <h1 className="pr-4">KTEO</h1>
+              <Badge
+                variant="outline"
+                className={`${getStatusBadgeColor(
+                  kteo?.kteo_next_date
+                )} text-white pb-1 pt-1`}
+              >
+                {getExpirationStatus(kteo?.kteo_next_date)}
+              </Badge>
+            </div>
+          </SheetTitle>
         </SheetHeader>
         <div className="grid gap-4 py-8">
           <div className="grid grid-cols-2 items-center">
