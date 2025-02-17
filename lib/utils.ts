@@ -17,11 +17,6 @@ export function getExpirationStatus(expirationDate: string) {
   const timeDiff = expiration.getTime() - today.getTime();
   const daysDiff = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
 
-  console.log("TODAY:", today);
-  console.log("EXPIRATION DATE:", expiration);
-  console.log("TIME DIFF:", timeDiff);
-  console.log("DAYS DIFF:", daysDiff);
-
   if (daysDiff < 0) {
     return "ΕΛΗΞΕ";
   } else if (daysDiff >= 0 && daysDiff <= 3) {
