@@ -2,6 +2,8 @@
 
 import { Insurance } from "@/models/vehicleModel";
 import ServiceDetailsSheet from "./details-sheet";
+import { getExpirationStatus, getStatusBadgeColor } from "@/lib/utils";
+import { Badge } from "../ui/badge";
 
 interface AllInsurancesTableProps {
   insurances: Insurance[];
@@ -47,7 +49,16 @@ export default function AllInsurancesTable({
                   ? insurance?.insurance_company
                   : "-"}
               </td>
-              <td className="text-lg p-2 break-words">{"ΕΝΕΡΓΗ"}</td>
+              <td className="text-lg p-2 break-words">
+                <Badge
+                  variant="outline"
+                  className={`${getStatusBadgeColor(
+                    insurance?.next_renewal_date
+                  )} text-white pb-1 pt-1`}
+                >
+                  {getExpirationStatus(insurance?.next_renewal_date)}
+                </Badge>
+              </td>
               <td className="text-lg p-2 break-words">
                 <ServiceDetailsSheet insurance={insurance} />
               </td>
