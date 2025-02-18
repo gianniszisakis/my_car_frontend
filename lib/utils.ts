@@ -1,34 +1,38 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
+import { parse, differenceInDays } from "date-fns";
+import { statusColorMap } from "./colorMapper";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
 export function getExpirationStatus(expirationDate: string) {
-  // Convert DD-MM-YYYY to YYYY-MM-DD
-  const [day, month, year] = expirationDate.split("-").map(Number);
-  const expiration = new Date(year, month - 1, day); // Month is 0-indexed
+  const expiredDate = parse(expirationDate, "dd-MM-yyyy", new Date());
+  //console.log("expired date", expiredDate);
 
+  // Get today's date (ignoring time)
   const today = new Date();
-  today.setHours(0, 0, 0, 0); // Ignore time differences
+  today.setHours(0, 0, 0, 0);
+
+  //console.log("today", today);
 
   // Calculate the difference in days
-  const timeDiff = expiration.getTime() - today.getTime();
-  const daysDiff = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+  const daysDiff = differenceInDays(expiredDate, today);
 
-  if (daysDiff < 0) {
-    return "ΕΛΗΞΕ";
-  } else if (daysDiff >= 0 && daysDiff <= 3) {
+  console.log("days diff", daysDiff);
+
+  if (daysDiff > 3) {
+    return "ΕΝΕΡΓΗ";
+  } else if (daysDiff >= 1) {
     return "ΛΗΓΕΙ";
   } else {
-    return "ΕΝΕΡΓΗ";
+    return "ΕΛΗΞΕ";
   }
 }
 
 export function getStatusBadgeColor(expirationDate: string) {
   const status = getExpirationStatus(expirationDate);
-  if (status === "ΕΝΕΡΓΗ") return "bg-green-700";
-  if (status === "ΛΗΓΕΙ") return "bg-yellow-700";
-  return "bg-red-700";
+  //console.log("STATUS", status);
+  return statusColorMap[status] || "bg-blue-500";
 }
