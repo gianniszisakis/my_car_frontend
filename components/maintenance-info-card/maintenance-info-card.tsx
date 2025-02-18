@@ -13,6 +13,8 @@ interface MaintentanceInfoCardProps {
   thirdLabel?: string;
   thirdValue?: string;
   badge?: boolean;
+  badgeStatus?: string;
+  badgeColor?: string;
 }
 
 export default function MaintentanceInfoCard({
@@ -24,6 +26,8 @@ export default function MaintentanceInfoCard({
   thirdLabel,
   thirdValue,
   badge = false,
+  badgeColor,
+  badgeStatus,
 }: MaintentanceInfoCardProps) {
   function getComponentIcon(title: Title) {
     const iconMap = {
@@ -43,9 +47,9 @@ export default function MaintentanceInfoCard({
           {badge ? (
             <Badge
               variant="outline"
-              className="bg-green-700 text-white pb-1 pt-1"
+              className={`${badgeColor} text-white pb-1 pt-1`}
             >
-              ΕΝΕΡΓΗ
+              {badgeStatus ? badgeStatus : null}
             </Badge>
           ) : null}
         </CardTitle>
