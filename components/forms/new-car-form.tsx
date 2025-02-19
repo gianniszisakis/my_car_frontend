@@ -57,7 +57,7 @@ export default function NewCarForm() {
   }
 
   return (
-    <div className="rounded-lg border border-gray-300 p-2 max-w-[1000px] mx-auto">
+    <div className="rounded-lg border border-gray-300 p-2 max-w-[1000px] mx-auto mb-4">
       <h1 className="text-center text-2xl font-bold">Καταχώρηση Αυτοκινήτου</h1>
       <Form {...form}>
         <form
@@ -73,7 +73,17 @@ export default function NewCarForm() {
                   <FormItem>
                     <FormLabel>Μάρκα Αυτοκινήτου</FormLabel>
                     <FormControl>
-                      <Input placeholder="Opel" {...field} />
+                      <Input
+                        placeholder="Opel"
+                        {...field}
+                        value={field.value}
+                        onChange={(e) => {
+                          const formattedValue =
+                            e.target.value.charAt(0).toUpperCase() +
+                            e.target.value.slice(1);
+                          field.onChange(formattedValue);
+                        }}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -89,7 +99,17 @@ export default function NewCarForm() {
                   <FormItem>
                     <FormLabel>Μοντέλο</FormLabel>
                     <FormControl>
-                      <Input placeholder="Corsa" {...field} />
+                      <Input
+                        placeholder="Corsa"
+                        {...field}
+                        value={field.value}
+                        onChange={(e) => {
+                          const formattedValue =
+                            e.target.value.charAt(0).toUpperCase() +
+                            e.target.value.slice(1);
+                          field.onChange(formattedValue);
+                        }}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -107,7 +127,18 @@ export default function NewCarForm() {
                   <FormItem>
                     <FormLabel>Έτος Κατασκευής</FormLabel>
                     <FormControl>
-                      <Input placeholder="2016" type="number" {...field} />
+                      <Input
+                        placeholder="2016"
+                        type="text"
+                        {...field}
+                        onChange={(e) => {
+                          const input = e.target.value.replace(/\D/g, ""); // Remove non-numeric characters
+                          if (input.length <= 4) {
+                            field.onChange(input);
+                          }
+                        }}
+                        value={field.value ?? ""}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -141,7 +172,12 @@ export default function NewCarForm() {
                   <FormItem>
                     <FormLabel>Αριθμός πλαισίου (VIN)</FormLabel>
                     <FormControl>
-                      <Input placeholder="230101010010101001" {...field} />
+                      <Input
+                        placeholder="230101010010101001"
+                        type="text"
+                        maxLength={17}
+                        {...field}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -188,7 +224,18 @@ export default function NewCarForm() {
                   <FormItem>
                     <FormLabel>Κυβισμός (cc)</FormLabel>
                     <FormControl>
-                      <Input placeholder="1200" type="number" {...field} />
+                      <Input
+                        placeholder="1200"
+                        type="text"
+                        {...field}
+                        onChange={(e) => {
+                          const input = e.target.value.replace(/\D/g, ""); // Remove non-numeric characters
+                          if (input.length <= 4) {
+                            field.onChange(input);
+                          }
+                        }}
+                        value={field.value ?? ""}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -204,7 +251,18 @@ export default function NewCarForm() {
                   <FormItem>
                     <FormLabel>Ιπποδύναμη (HP/PS)</FormLabel>
                     <FormControl>
-                      <Input placeholder="64" type="number" {...field} />
+                      <Input
+                        placeholder="64"
+                        type="text"
+                        {...field}
+                        onChange={(e) => {
+                          const input = e.target.value.replace(/\D/g, ""); // Remove non-numeric characters
+                          if (input.length <= 3) {
+                            field.onChange(input);
+                          }
+                        }}
+                        value={field.value ?? ""}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -252,7 +310,18 @@ export default function NewCarForm() {
                   <FormItem>
                     <FormLabel>Κατανάλωση καυσίμου (λίτρα/100χλμ)</FormLabel>
                     <FormControl>
-                      <Input placeholder="6" type="number" {...field} />
+                      <Input
+                        placeholder="6"
+                        type="text"
+                        {...field}
+                        onChange={(e) => {
+                          const input = e.target.value.replace(/\D/g, ""); // Remove non-numeric characters
+                          if (input.length <= 3) {
+                            field.onChange(input);
+                          }
+                        }}
+                        value={field.value ?? ""}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
