@@ -4,5 +4,5 @@ import vehicleData from "@/public/placeholder-data/vehicleData";
 
 export default function Home() {
   const hasVehicle = vehicleData?.vehicle?.brand;
-  return <>{hasVehicle ? <VehicleMaintenanceData /> : <NewCarForm />}</>;
+  return <>{!hasVehicle ? <VehicleMaintenanceData /> : <NewCarForm />}</>;
 }
