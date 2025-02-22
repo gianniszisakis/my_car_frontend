@@ -19,6 +19,7 @@ interface KteoDetailsSheetProps {
 }
 
 export default function ServiceDetailsSheet({ kteo }: KteoDetailsSheetProps) {
+  const status = getExpirationStatus(kteo?.kteo_next_date);
   return (
     <Sheet>
       <SheetTrigger asChild>
@@ -31,9 +32,13 @@ export default function ServiceDetailsSheet({ kteo }: KteoDetailsSheetProps) {
               <h1 className="pr-4">KTEO</h1>
               <Badge
                 variant="outline"
-                className={`${getStatusBadgeColor(
-                  kteo?.kteo_next_date
-                )} text-white pb-1 pt-1`}
+                className={`${
+                  status === "ΛΗΓΕΙ"
+                    ? "bg-orange-700"
+                    : status === "ΕΛΗΞΕ"
+                    ? "bg-red-700"
+                    : "bg-green-700"
+                } text-white pb-1 pt-1`}
               >
                 {getExpirationStatus(kteo?.kteo_next_date)}
               </Badge>
