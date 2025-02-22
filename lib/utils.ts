@@ -20,7 +20,7 @@ export function getExpirationStatus(expirationDate: string) {
   // Calculate the difference in days
   const daysDiff = differenceInDays(expiredDate, today);
 
-  console.log("days diff", daysDiff);
+  //console.log("days diff", daysDiff);
 
   if (daysDiff > 3) {
     return "ΕΝΕΡΓΗ";
