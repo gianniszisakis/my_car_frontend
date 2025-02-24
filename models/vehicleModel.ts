@@ -28,6 +28,7 @@ export interface Insurance {
   civil_liability: boolean;
   accident_assistance: boolean;
   legal_protection: boolean;
+  status: string;
 }
 
 // KTEO interface
