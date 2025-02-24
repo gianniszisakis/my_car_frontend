@@ -3,9 +3,11 @@ import VehicleCard from "@/components/vehicle-card/vehicle-card";
 import vehicleData from "@/public/placeholder-data/vehicleData";
 import { useAllInsurance } from "@/hooks/useAllInsurance";
 import { useAllKteo } from "@/hooks/useAllKteo";
+import { useAllService } from "@/hooks/useAllServices";
 import { getStatusBadgeColor } from "@/lib/utils";
 
 export default function VehicleMaintenanceData() {
+  /* API calls */
   const {
     data: insuranceData,
     isLoading: isInsuranceLoading,
@@ -16,9 +18,18 @@ export default function VehicleMaintenanceData() {
     isLoading: isKteoLoading,
     error: kteoError,
   } = useAllKteo();
-  if (isInsuranceLoading || isKteoLoading) return <div>Loading...</div>;
+  const {
+    data: serviceData,
+    isLoading: isServiceLoading,
+    error: serviceError,
+  } = useAllService();
+  /* end of API calls */
+
+  if (isInsuranceLoading || isKteoLoading || isServiceLoading)
+    return <div>Loading...</div>;
   if (insuranceError) return <div>Error fetching insurance data</div>;
   if (kteoError) return <div>Error fetching KTEO data</div>;
+  if (serviceError) return <div>Error fetching KTEO data</div>;
   return (
     <div className="flex flex-col lg:flex-row h-screen">
       {/* Left Section */}
@@ -33,14 +44,14 @@ export default function VehicleMaintenanceData() {
             title="Service"
             firstLabel="Τελευταίο Service"
             firstValue={
-              vehicleData?.services?.[0]?.inspection_date
-                ? vehicleData?.services?.[0]?.inspection_date
+              serviceData?.[0]?.inspection_date
+                ? serviceData?.[0]?.inspection_date
                 : "-"
             }
             secondLabel="Επόμενο Service"
             secondValue={
-              vehicleData?.services?.[0]?.next_service?.date
-                ? vehicleData?.services?.[0]?.next_service?.date
+              serviceData?.[0]?.next_service?.date
+                ? serviceData?.[0]?.next_service?.date
                 : "-"
             }
           />
