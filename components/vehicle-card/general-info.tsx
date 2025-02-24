@@ -1,6 +1,10 @@
-import vehicleData from "@/public/placeholder-data/vehicleData";
+import { Vehicle } from "@/models/vehicleModel";
 
-export default function GeneralInfo() {
+interface GeneralInfoProps {
+  vehicle: Vehicle;
+}
+
+export default function GeneralInfo({ vehicle }: GeneralInfoProps) {
   return (
     <>
       <div className="border-b-2 border-blue text-2xl text-center"></div>
@@ -12,9 +16,7 @@ export default function GeneralInfo() {
           <p className="text-lg font-semibold">Μοντέλο:</p>
         </div>
         <div className="bg-white pl-4">
-          <p className="text-lg">
-            {vehicleData?.vehicle?.model ? vehicleData?.vehicle?.model : "-"}
-          </p>
+          <p className="text-lg">{vehicle?.model ? vehicle?.model : "-"}</p>
         </div>
       </div>
       <div className="flex flex-col md:flex-row">
@@ -22,9 +24,7 @@ export default function GeneralInfo() {
           <p className="text-lg font-semibold">Έτος κατασκευής:</p>
         </div>
         <div className="bg-white pl-4">
-          <p className="text-lg">
-            {vehicleData?.vehicle?.year ? vehicleData?.vehicle?.year : "-"}
-          </p>
+          <p className="text-lg">{vehicle?.year ? vehicle?.year : "-"}</p>
         </div>
       </div>
       <div className="flex flex-col md:flex-row">
@@ -33,9 +33,7 @@ export default function GeneralInfo() {
         </div>
         <div className="bg-white pl-4">
           <p className="text-lg">
-            {vehicleData?.vehicle?.body_type
-              ? vehicleData?.vehicle?.body_type
-              : "-"}
+            {vehicle?.body_type ? vehicle?.body_type : "-"}
           </p>
         </div>
       </div>
@@ -44,9 +42,7 @@ export default function GeneralInfo() {
           <p className="text-lg font-semibold">Αριθμός πλαισίου (VIN):</p>
         </div>
         <div className="bg-white pl-4">
-          <p className="text-lg">
-            {vehicleData?.vehicle?.vin ? vehicleData?.vehicle?.vin : "-"}
-          </p>
+          <p className="text-lg">{vehicle?.vin ? vehicle?.vin : "-"}</p>
         </div>
       </div>
       <div className="h-5 border-b-2 border-blue text-2xl text-center"></div>

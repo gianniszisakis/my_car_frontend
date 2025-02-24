@@ -1,5 +1,9 @@
-import vehicleData from "@/public/placeholder-data/vehicleData";
-export default function EngineDetails() {
+import { Vehicle } from "@/models/vehicleModel";
+
+interface EngineDetailsProps {
+  vehicle: Vehicle;
+}
+export default function EngineDetails({ vehicle }: EngineDetailsProps) {
   return (
     <>
       <h1 className="text-3xl font-bold text-black-600 mb-4 text-center uppercase tracking-wide mt-6">
@@ -11,9 +15,7 @@ export default function EngineDetails() {
         </div>
         <div className="bg-white pl-4">
           <p className="text-lg">
-            {vehicleData?.vehicle?.fuel_type
-              ? vehicleData?.vehicle?.fuel_type
-              : "-"}
+            {vehicle?.fuel_type ? vehicle?.fuel_type : "-"}
           </p>
         </div>
       </div>
@@ -23,9 +25,7 @@ export default function EngineDetails() {
         </div>
         <div className="bg-white pl-4">
           <p className="text-lg">
-            {vehicleData?.vehicle?.engine_capacity_cc
-              ? vehicleData?.vehicle?.engine_capacity_cc
-              : "-"}
+            {vehicle?.engine_capacity_cc ? vehicle?.engine_capacity_cc : "-"}
           </p>
         </div>
       </div>
@@ -35,9 +35,7 @@ export default function EngineDetails() {
         </div>
         <div className="bg-white pl-4">
           <p className="text-lg">
-            {vehicleData?.vehicle?.horsepower_hp
-              ? vehicleData?.vehicle?.horsepower_hp
-              : "-"}
+            {vehicle?.horsepower_hp ? vehicle?.horsepower_hp : "-"}
           </p>
         </div>
       </div>
@@ -47,9 +45,7 @@ export default function EngineDetails() {
         </div>
         <div className="bg-white pl-4">
           <p className="text-lg">
-            {vehicleData?.vehicle?.transmission_type
-              ? vehicleData?.vehicle?.transmission_type
-              : "-"}
+            {vehicle?.transmission_type ? vehicle?.transmission_type : "-"}
           </p>
         </div>
       </div>
@@ -61,8 +57,8 @@ export default function EngineDetails() {
         </div>
         <div className="bg-white pl-4">
           <p className="text-lg">
-            {vehicleData?.vehicle?.fuel_consumption_l_per_100km
-              ? vehicleData?.vehicle?.fuel_consumption_l_per_100km
+            {vehicle?.fuel_consumption_l_per_100km
+              ? vehicle?.fuel_consumption_l_per_100km
               : "-"}
           </p>
         </div>
