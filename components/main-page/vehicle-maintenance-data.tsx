@@ -1,9 +1,14 @@
 import MaintentanceInfoCard from "@/components/maintenance-info-card/maintenance-info-card";
 import VehicleCard from "@/components/vehicle-card/vehicle-card";
 import vehicleData from "@/public/placeholder-data/vehicleData";
+import { useAllInsurance } from "@/hooks/useAllInsurance";
 import { getExpirationStatus, getStatusBadgeColor } from "@/lib/utils";
 
 export default function VehicleMaintenanceData() {
+  const { data, isLoading, error } = useAllInsurance();
+  if (isLoading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error.message}</p>;
+  if (!data) return <p>No vehicle data available.</p>;
   return (
     <div className="flex flex-col lg:flex-row h-screen">
       {/* Left Section */}
@@ -52,23 +57,15 @@ export default function VehicleMaintenanceData() {
             title="Ασφάλεια"
             firstLabel="Εταιρία"
             firstValue={
-              vehicleData?.insurance?.[0]?.insurance_company
-                ? vehicleData?.insurance?.[0]?.insurance_company
-                : "-"
+              data?.[0]?.insurance_company ? data?.[0]?.insurance_company : "-"
             }
             secondLabel="Επόμενη Ανανέωση"
             secondValue={
-              vehicleData?.insurance?.[0]?.next_renewal_date
-                ? vehicleData?.insurance?.[0]?.next_renewal_date
-                : "-"
+              data?.[0]?.next_renewal_date ? data?.[0]?.next_renewal_date : "-"
             }
             badge
-            badgeStatus={getExpirationStatus(
-              vehicleData?.insurance?.[0]?.next_renewal_date
-            )}
-            badgeColor={getStatusBadgeColor(
-              vehicleData?.insurance?.[0]?.next_renewal_date
-            )}
+            badgeStatus={data?.[0]?.status}
+            badgeColor={getStatusBadgeColor(data?.[0]?.status)}
           />
         </div>
       </div>
