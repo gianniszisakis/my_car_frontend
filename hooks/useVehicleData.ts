@@ -10,5 +10,6 @@ export function useVehicleData() {
   return useQuery({
     queryKey: ["vehicleData"],
     queryFn: fetchVehicle,
+    staleTime: 1000 * 60 * 30, // Cache valid for 30 minutes
   });
 }
