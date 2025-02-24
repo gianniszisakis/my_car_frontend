@@ -2,13 +2,23 @@ import MaintentanceInfoCard from "@/components/maintenance-info-card/maintenance
 import VehicleCard from "@/components/vehicle-card/vehicle-card";
 import vehicleData from "@/public/placeholder-data/vehicleData";
 import { useAllInsurance } from "@/hooks/useAllInsurance";
-import { getExpirationStatus, getStatusBadgeColor } from "@/lib/utils";
+import { useAllKteo } from "@/hooks/useAllKteo";
+import { getStatusBadgeColor } from "@/lib/utils";
 
 export default function VehicleMaintenanceData() {
-  const { data, isLoading, error } = useAllInsurance();
-  if (isLoading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error.message}</p>;
-  if (!data) return <p>No vehicle data available.</p>;
+  const {
+    data: insuranceData,
+    isLoading: isInsuranceLoading,
+    error: insuranceError,
+  } = useAllInsurance();
+  const {
+    data: kteoData,
+    isLoading: isKteoLoading,
+    error: kteoError,
+  } = useAllKteo();
+  if (isInsuranceLoading || isKteoLoading) return <div>Loading...</div>;
+  if (insuranceError) return <div>Error fetching insurance data</div>;
+  if (kteoError) return <div>Error fetching KTEO data</div>;
   return (
     <div className="flex flex-col lg:flex-row h-screen">
       {/* Left Section */}
@@ -40,16 +50,19 @@ export default function VehicleMaintenanceData() {
             title="ΚΤΕΟ"
             firstLabel="Τελευταίο KTEO"
             firstValue={
-              vehicleData?.kteo?.[0]?.kteo_last_date
-                ? vehicleData?.kteo?.[0]?.kteo_last_date
+              kteoData?.[0]?.kteo_last_date
+                ? kteoData?.[0]?.kteo_last_date
                 : "-"
             }
             secondLabel="Επόμενο KTEO"
             secondValue={
-              vehicleData?.kteo?.[0]?.kteo_next_date
-                ? vehicleData?.kteo?.[0]?.kteo_next_date
+              kteoData?.[0]?.kteo_next_date
+                ? kteoData?.[0]?.kteo_next_date
                 : "-"
             }
+            badge
+            badgeStatus={kteoData?.[0]?.status}
+            badgeColor={getStatusBadgeColor(kteoData?.[0]?.status ?? "-")}
           />
         </div>
         <div className="p-6 flex items-center justify-center text-white text-2xl">
@@ -57,15 +70,19 @@ export default function VehicleMaintenanceData() {
             title="Ασφάλεια"
             firstLabel="Εταιρία"
             firstValue={
-              data?.[0]?.insurance_company ? data?.[0]?.insurance_company : "-"
+              insuranceData?.[0]?.insurance_company
+                ? insuranceData?.[0]?.insurance_company
+                : "-"
             }
             secondLabel="Επόμενη Ανανέωση"
             secondValue={
-              data?.[0]?.next_renewal_date ? data?.[0]?.next_renewal_date : "-"
+              insuranceData?.[0]?.next_renewal_date
+                ? insuranceData?.[0]?.next_renewal_date
+                : "-"
             }
             badge
-            badgeStatus={data?.[0]?.status}
-            badgeColor={getStatusBadgeColor(data?.[0]?.status)}
+            badgeStatus={insuranceData?.[0]?.status}
+            badgeColor={getStatusBadgeColor(insuranceData?.[0]?.status ?? "-")}
           />
         </div>
       </div>

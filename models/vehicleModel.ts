@@ -38,6 +38,7 @@ export interface Kteo {
   kteo_next_date: string;
   comments: string;
   kteo_name: string;
+  status: string;
 }
 
 // Vehicle interface
