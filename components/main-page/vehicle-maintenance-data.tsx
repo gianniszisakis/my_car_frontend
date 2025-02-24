@@ -1,10 +1,10 @@
 import MaintentanceInfoCard from "@/components/maintenance-info-card/maintenance-info-card";
 import VehicleCard from "@/components/vehicle-card/vehicle-card";
-import vehicleData from "@/public/placeholder-data/vehicleData";
 import { useAllInsurance } from "@/hooks/useAllInsurance";
 import { useAllKteo } from "@/hooks/useAllKteo";
 import { useAllService } from "@/hooks/useAllServices";
 import { getStatusBadgeColor } from "@/lib/utils";
+import { SkeletonLoadingPage } from "./loading-cards";
 
 export default function VehicleMaintenanceData() {
   /* API calls */
@@ -26,7 +26,7 @@ export default function VehicleMaintenanceData() {
   /* end of API calls */
 
   if (isInsuranceLoading || isKteoLoading || isServiceLoading)
-    return <div>Loading...</div>;
+    return <SkeletonLoadingPage />;
   if (insuranceError) return <div>Error fetching insurance data</div>;
   if (kteoError) return <div>Error fetching KTEO data</div>;
   if (serviceError) return <div>Error fetching KTEO data</div>;
