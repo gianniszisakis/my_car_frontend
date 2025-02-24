@@ -3,11 +3,11 @@ import GeneralInfo from "./general-info";
 import EngineDetails from "./engine-details";
 import Image from "next/image";
 import { useVehicleData } from "@/hooks/useVehicleData";
+import ErrorCard from "../main-page/error-card";
 
 export default function VehicleCard() {
-  const { data, isLoading, error } = useVehicleData();
-  if (isLoading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error.message}</p>;
+  const { data, error } = useVehicleData();
+  if (error) return <ErrorCard title="Αυτοκίνητο" />;
   if (!data) return <p>No vehicle data available.</p>;
   return (
     <Card className="w-full lg:max-w-[1000px] max-h-[970px] md:max-h-[750px] lg:max-h-[650px]">
