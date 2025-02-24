@@ -31,8 +31,7 @@ export function getExpirationStatus(expirationDate: string) {
   }
 }
 
-export function getStatusBadgeColor(expirationDate: string) {
-  const status = getExpirationStatus(expirationDate);
-  //console.log("STATUS", status);
+export function getStatusBadgeColor(status: string) {
+  //const status = getExpirationStatus(statusApi);
   return statusColorMap[status] || "bg-blue-500";
 }
