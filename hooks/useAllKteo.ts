@@ -8,7 +8,7 @@ async function fetchAllKteo(): Promise<Kteo[]> {
 }
 
 export function useAllKteo() {
-  return useQuery<Kteo[]>({
+  return useQuery({
     queryKey: ["kteo"],
     queryFn: fetchAllKteo,
     staleTime: 1000 * 60 * 30, // Cache valid for 30 minutes

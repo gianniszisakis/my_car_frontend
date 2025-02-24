@@ -11,15 +11,14 @@ import { Button } from "../ui/button";
 import { cn } from "@/lib/utils";
 import Comments from "../comments/comments";
 import { Kteo } from "@/models/vehicleModel";
-import { getExpirationStatus, getStatusBadgeColor } from "@/lib/utils";
+import { getStatusBadgeColor } from "@/lib/utils";
 import { Badge } from "../ui/badge";
 
 interface KteoDetailsSheetProps {
   kteo: Kteo;
 }
 
-export default function ServiceDetailsSheet({ kteo }: KteoDetailsSheetProps) {
-  const status = getExpirationStatus(kteo?.kteo_next_date);
+export default function KteoDetailsSheet({ kteo }: KteoDetailsSheetProps) {
   return (
     <Sheet>
       <SheetTrigger asChild>
@@ -32,15 +31,11 @@ export default function ServiceDetailsSheet({ kteo }: KteoDetailsSheetProps) {
               <h1 className="pr-4">KTEO</h1>
               <Badge
                 variant="outline"
-                className={`${
-                  status === "ΛΗΓΕΙ"
-                    ? "bg-orange-700"
-                    : status === "ΕΛΗΞΕ"
-                    ? "bg-red-700"
-                    : "bg-green-700"
-                } text-white pb-1 pt-1`}
+                className={`${getStatusBadgeColor(
+                  kteo?.status
+                )} text-white pb-1 pt-1`}
               >
-                {getExpirationStatus(kteo?.kteo_next_date)}
+                {kteo?.status}
               </Badge>
             </div>
           </SheetTitle>

@@ -1,8 +1,8 @@
 "use client";
 
 import { Kteo } from "@/models/vehicleModel";
-import ServiceDetailsSheet from "./details-sheet";
-import { getExpirationStatus, getStatusBadgeColor } from "@/lib/utils";
+import KteoDetailsSheet from "./details-sheet";
+import { getStatusBadgeColor } from "@/lib/utils";
 import { Badge } from "../ui/badge";
 
 interface AllKteoTableProps {
@@ -23,8 +23,6 @@ export default function AllKteoTable({ allKteo }: AllKteoTableProps) {
         </thead>
         <tbody>
           {allKteo?.map((kteo) => {
-            const status = getExpirationStatus(kteo?.kteo_next_date);
-            //console.log("status", status);
             return (
               <tr className="border-b border-gray-300" key={kteo?.kteo_id}>
                 <td className="text-lg p-2 break-words">
@@ -37,14 +35,14 @@ export default function AllKteoTable({ allKteo }: AllKteoTableProps) {
                   <Badge
                     variant="outline"
                     className={`${getStatusBadgeColor(
-                      kteo?.kteo_next_date
+                      kteo?.status
                     )} text-white pb-1 pt-1`}
                   >
-                    {getExpirationStatus(kteo?.kteo_next_date)}
+                    {kteo?.status}
                   </Badge>
                 </td>
                 <td className="text-lg p-2 break-words">
-                  <ServiceDetailsSheet kteo={kteo} />
+                  <KteoDetailsSheet kteo={kteo} />
                 </td>
               </tr>
             );
