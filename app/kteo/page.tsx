@@ -2,12 +2,16 @@
 import AllKteoTable from "@/components/kteo/all-kteo-table";
 import NewEventButton from "@/components/new-event/new-event-button";
 import { useAllKteo } from "@/hooks/useAllKteo";
+import NoDataErrorPages from "@/components/loading-error/no-data-error-pages";
 import { LoadingPageEntities } from "@/components/loading-error/loading-cards-pages";
 
 export default function KTEO() {
   const { data, isLoading, error } = useAllKteo();
   if (isLoading) {
     return <LoadingPageEntities />;
+  }
+  if (error) {
+    return <NoDataErrorPages isError={true} />;
   }
   return (
     <>
@@ -17,11 +21,7 @@ export default function KTEO() {
       <NewEventButton text="Νέο ΚΤΕΟ" targetLink="/kteo/newKteo/" />
       <div className="flex flex-row h-screen">
         {!data?.length ? (
-          <div className="flex flex-col items-center justify-center h-[80vh] w-full">
-            <h2 className="text-2xl font-semibold text-gray-700">
-              Δεν υπάρχουν διαθέσιμα ΚΤΕΟ
-            </h2>
-          </div>
+          <NoDataErrorPages noData={!data?.length} />
         ) : (
           <AllKteoTable allKteo={data} />
         )}
