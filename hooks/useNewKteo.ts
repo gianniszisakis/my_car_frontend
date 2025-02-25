@@ -13,6 +13,7 @@ export const useNewKteo = (formReset: () => void) => {
     },
     onSuccess: (data) => {
       toast({
+        variant: "success",
         title: "Επιτυχία",
         description: `Το ΚΤΕΟ καταχωρήθηκε επιτυχώς!`,
       });
