@@ -13,6 +13,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { format } from "date-fns";
+import { el } from "date-fns/locale";
 import {
   Popover,
   PopoverContent,
@@ -113,7 +114,7 @@ export default function NewKteoForm() {
                             )}
                           >
                             {field.value ? (
-                              format(field.value, "PPP")
+                              format(field.value, "PPP", { locale: el })
                             ) : (
                               <span>Pick a date</span>
                             )}
@@ -126,6 +127,7 @@ export default function NewKteoForm() {
                           mode="single"
                           selected={field.value}
                           onSelect={field.onChange}
+                          locale={el}
                           initialFocus
                         />
                       </PopoverContent>
@@ -155,7 +157,7 @@ export default function NewKteoForm() {
                             )}
                           >
                             {field.value ? (
-                              format(field.value, "PPP")
+                              format(field.value, "PPP", { locale: el })
                             ) : (
                               <span>Pick a date</span>
                             )}
@@ -168,6 +170,7 @@ export default function NewKteoForm() {
                           mode="single"
                           selected={field.value}
                           onSelect={field.onChange}
+                          locale={el}
                           initialFocus
                         />
                       </PopoverContent>
