@@ -2,14 +2,26 @@
 
 import { Kteo } from "@/models/vehicleModel";
 import KteoDetailsSheet from "./details-sheet";
-import { getStatusBadgeColor } from "@/lib/utils";
 import { Badge } from "../ui/badge";
+
+import { compareDesc, parse } from "date-fns";
+
+function parseDate(dateString: string): Date {
+  return parse(dateString, "dd-MM-yyyy", new Date()); // Parse the string to a Date object
+}
 
 interface AllKteoTableProps {
   allKteo: Kteo[];
 }
 
 export default function AllKteoTable({ allKteo }: AllKteoTableProps) {
+  /* Sort the KTEO data by the next date (descending order) */
+  const sortedKteo = [...allKteo].sort((a, b) => {
+    const dateA = parseDate(a.kteo_next_date);
+    const dateB = parseDate(b.kteo_next_date);
+    return compareDesc(dateA, dateB);
+  });
+
   return (
     <div className="p-6 w-full">
       <table className="w-[800px] md:w-full table-auto border-collapse border border-gray-300">
@@ -22,7 +34,7 @@ export default function AllKteoTable({ allKteo }: AllKteoTableProps) {
           </tr>
         </thead>
         <tbody>
-          {allKteo?.map((kteo) => {
+          {sortedKteo?.map((kteo) => {
             return (
               <tr className="border-b border-gray-300" key={kteo?.kteo_id}>
                 <td className="text-lg p-2 break-words">
