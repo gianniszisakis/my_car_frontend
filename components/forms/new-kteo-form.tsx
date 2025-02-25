@@ -7,7 +7,6 @@ import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -24,36 +23,65 @@ import { Calendar as CalendarIcon } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
+import { useMutation } from "@tanstack/react-query";
+import { Kteo } from "@/models/vehicleModel";
+import api from "@/lib/axios"; // The axios instance
+import { useNewKteo } from "@/hooks/useNewKteo";
 
 const formSchema = z.object({
   kteo_last_date: z.coerce.date(),
   kteo_next_date: z.coerce.date(),
   kteo_name: z.string().optional(),
-  kteo_comments: z.string().optional(),
+  comments: z.string().optional(),
 });
 
 export default function NewKteoForm() {
   const { toast } = useToast();
+
+  //setup the mutation
+  /*const mutation = useMutation<Kteo, Error, Omit<Kteo, "kteo_id" | "status">>({
+    mutationFn: async (newKteo) => {
+      const { data } = await api.post<Kteo>("/allKteo", newKteo);
+      return data; // Return only the Kteo object, not the full AxiosResponse
+    },
+    onSuccess: (data) => {
+      console.log("data", data);
+      toast({
+        title: "Επιτυχία",
+        description: `Το ΚΤΕΟ καταχωρήθηκε επιτυχώς!`,
+      });
+      form.reset(); // Reset the form after successful submission
+    },
+    onError: (error) => {
+      toast({
+        variant: "destructive",
+        title: "Σφάλμα",
+        description: `Αποτυχία καταχώρησης: ${error.message}`,
+      });
+    },
+  });*/
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       kteo_last_date: new Date(),
       kteo_next_date: new Date(),
+      kteo_name: "",
+      comments: "",
     },
   });
 
+  const { mutate } = useNewKteo(form.reset);
+
   function onSubmit(values: z.infer<typeof formSchema>) {
-    try {
-      console.log(values);
-      toast(
-        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(values, null, 2)}</code>
-        </pre>
-      );
-    } catch (error) {
-      console.error("Form submission error", error);
-      //toast.error("Failed to submit the form. Please try again.");
-    }
+    const formattedValues = {
+      kteo_last_date: format(values.kteo_last_date, "dd-MM-yyyy"),
+      kteo_next_date: format(values.kteo_next_date, "dd-MM-yyyy"),
+      kteo_name: values.kteo_name ? values.kteo_name : "-",
+      comments: values.comments ? values.comments : "-",
+    };
+
+    mutate(formattedValues);
   }
 
   return (
@@ -169,7 +197,7 @@ export default function NewKteoForm() {
 
           <FormField
             control={form.control}
-            name="kteo_comments"
+            name="comments"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Παρατηρήσεις</FormLabel>
