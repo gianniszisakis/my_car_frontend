@@ -3,7 +3,7 @@ import GeneralInfo from "./general-info";
 import EngineDetails from "./engine-details";
 import Image from "next/image";
 import { useVehicleData } from "@/hooks/useVehicleData";
-import ErrorCard from "../main-page/error-card";
+import ErrorCard from "../loading-error/error-card";
 
 export default function VehicleCard() {
   const { data, error } = useVehicleData();

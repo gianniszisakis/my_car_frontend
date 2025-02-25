@@ -4,8 +4,8 @@ import { useAllInsurance } from "@/hooks/useAllInsurance";
 import { useAllKteo } from "@/hooks/useAllKteo";
 import { useAllService } from "@/hooks/useAllServices";
 import { getStatusBadgeColor } from "@/lib/utils";
-import { SkeletonLoadingPage } from "./loading-cards";
-import ErrorCard from "./error-card";
+import { SkeletonLoadingPage } from "../loading-error/loading-cards";
+import ErrorCard from "../loading-error/error-card";
 
 export default function VehicleMaintenanceData() {
   /* API calls */

@@ -34,9 +34,13 @@ export default function AllKteoTable({ allKteo }: AllKteoTableProps) {
                 <td className="text-lg p-2 break-words">
                   <Badge
                     variant="outline"
-                    className={`${getStatusBadgeColor(
-                      kteo?.status
-                    )} text-white pb-1 pt-1`}
+                    className={`${
+                      kteo?.status === "ΛΗΓΕΙ"
+                        ? "bg-orange-700"
+                        : kteo?.status === "ΕΛΗΞΕ"
+                        ? "bg-red-700"
+                        : "bg-green-700"
+                    } text-white pb-1 pt-1`}
                   >
                     {kteo?.status}
                   </Badge>
