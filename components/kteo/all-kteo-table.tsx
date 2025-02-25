@@ -11,7 +11,7 @@ interface AllKteoTableProps {
 
 export default function AllKteoTable({ allKteo }: AllKteoTableProps) {
   return (
-    <div className="p-6 w-full overflow-x-auto">
+    <div className="p-6 w-full">
       <table className="w-[800px] md:w-full table-auto border-collapse border border-gray-300">
         <thead>
           <tr className="bg-gray-200">
