@@ -11,7 +11,7 @@ import { Button } from "../ui/button";
 import { cn } from "@/lib/utils";
 import { Insurance } from "@/models/vehicleModel";
 import { Badge } from "../ui/badge";
-import { getExpirationStatus, getStatusBadgeColor } from "@/lib/utils";
+import { getStatusBadgeColor } from "@/lib/utils";
 
 interface InsuranceDetailsSheetProps {
   insurance: Insurance;
@@ -33,10 +33,10 @@ export default function InsuranceDetailsSheet({
               <Badge
                 variant="outline"
                 className={`${getStatusBadgeColor(
-                  insurance?.next_renewal_date
+                  insurance?.status
                 )} text-white pb-1 pt-1`}
               >
-                {getExpirationStatus(insurance?.next_renewal_date)}
+                {insurance?.status}
               </Badge>
             </div>
           </SheetTitle>

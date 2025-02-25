@@ -2,7 +2,7 @@
 
 import { Insurance } from "@/models/vehicleModel";
 import ServiceDetailsSheet from "./details-sheet";
-import { getExpirationStatus, getStatusBadgeColor } from "@/lib/utils";
+import { getStatusBadgeColor } from "@/lib/utils";
 import { Badge } from "../ui/badge";
 
 interface AllInsurancesTableProps {
@@ -27,11 +27,6 @@ export default function AllInsurancesTable({
         </thead>
         <tbody>
           {insurances?.map((insurance) => {
-            const status = getExpirationStatus(insurance?.next_renewal_date);
-            const badgeColor = getStatusBadgeColor(
-              insurance?.next_renewal_date
-            );
-            //console.log(`status ${status} and color ${badgeColor}`);
             return (
               <tr
                 className="border-b border-gray-300"
@@ -58,9 +53,11 @@ export default function AllInsurancesTable({
                 <td className="text-lg p-2 break-words">
                   <Badge
                     variant="outline"
-                    className={`${badgeColor} text-white pb-1 pt-1`}
+                    className={`${getStatusBadgeColor(
+                      insurance?.status
+                    )} text-white pb-1 pt-1`}
                   >
-                    {status}
+                    {insurance?.status}
                   </Badge>
                 </td>
                 <td className="text-lg p-2 break-words">
