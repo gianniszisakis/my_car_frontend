@@ -20,40 +20,61 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useToast } from "@/hooks/use-toast";
+import { useNewVehicle } from "@/hooks/useNewVehicle";
 
 const formSchema = z.object({
-  brandName: z.string(),
-  modelName: z.string(),
-  yearOfConstruction: z.coerce.number().optional(),
-  carType: z.string().optional(),
-  vinNumber: z.string().optional(),
-  fuelType: z.string().optional(),
-  engineCapacity: z.coerce.number().optional(),
-  horsepower: z.coerce.number().optional(),
-  transmissionType: z.string().optional(),
-  fuelConsumption: z.number().optional(),
+  brand: z.string().min(1, "Η μάρκα είναι υποχρεωτική"),
+  model: z.string().min(1, "Το μοντέλο είναι υποχρεωτικό"),
+  year: z.string().optional(),
+  body_type: z.string().optional(),
+  vin: z.string().optional(),
+  fuel_type: z.string().optional(),
+  engine_capacity_cc: z.string().optional(),
+  horsepower_hp: z.string().optional(),
+  transmission_type: z.string().optional(),
+  fuel_consumption_l_per_100km: z.string().optional(),
 });
 
 export default function NewCarForm() {
-  const { toast } = useToast();
-
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
+    defaultValues: {
+      brand: "",
+      model: "",
+      year: "",
+      body_type: "",
+      vin: "",
+      fuel_type: "",
+      engine_capacity_cc: "",
+      horsepower_hp: "",
+      transmission_type: "",
+      fuel_consumption_l_per_100km: "",
+    },
   });
 
+  const { mutate } = useNewVehicle(form.reset);
+
   function onSubmit(values: z.infer<typeof formSchema>) {
-    try {
-      console.log(values);
-      toast(
-        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(values, null, 2)}</code>
-        </pre>
-      );
-    } catch (error) {
-      console.error("Form submission error", error);
-      //toast.error("Failed to submit the form. Please try again.");
-    }
+    const formattedValues = {
+      brand: values.brand ? values.brand : "",
+      model: values.model ? values.model : "",
+      year: values.year ? values.year : "-",
+      body_type: values.body_type ? values.body_type : "-",
+      vin: values.vin ? values.vin : "-",
+      fuel_type: values.fuel_type ? values.fuel_type : "-",
+      engine_capacity_cc: values.engine_capacity_cc
+        ? values.engine_capacity_cc
+        : "-",
+      horsepower_hp: values.horsepower_hp ? values.horsepower_hp : "-",
+      transmission_type: values.transmission_type
+        ? values.transmission_type
+        : "-",
+      fuel_consumption_l_per_100km: values.fuel_consumption_l_per_100km
+        ? values.fuel_consumption_l_per_100km
+        : "-",
+    };
+    console.log(formattedValues);
+    mutate(formattedValues);
   }
 
   return (
@@ -68,10 +89,10 @@ export default function NewCarForm() {
             <div className="col-span-1 md:col-span-6">
               <FormField
                 control={form.control}
-                name="brandName"
+                name="brand"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Μάρκα Αυτοκινήτου</FormLabel>
+                    <FormLabel>Μάρκα Αυτοκινήτου *</FormLabel>
                     <FormControl>
                       <Input
                         placeholder="Opel"
@@ -94,10 +115,10 @@ export default function NewCarForm() {
             <div className="col-span-1 md:col-span-6">
               <FormField
                 control={form.control}
-                name="modelName"
+                name="model"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Μοντέλο</FormLabel>
+                    <FormLabel>Μοντέλο *</FormLabel>
                     <FormControl>
                       <Input
                         placeholder="Corsa"
@@ -122,7 +143,7 @@ export default function NewCarForm() {
             <div className="col-span-1 md:col-span-6">
               <FormField
                 control={form.control}
-                name="yearOfConstruction"
+                name="year"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Έτος Κατασκευής</FormLabel>
@@ -149,7 +170,7 @@ export default function NewCarForm() {
             <div className="col-span-1 md:col-span-6">
               <FormField
                 control={form.control}
-                name="carType"
+                name="body_type"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Τύπος Αμαξώματος</FormLabel>
@@ -167,7 +188,7 @@ export default function NewCarForm() {
             <div className="col-span-1 md:col-span-6">
               <FormField
                 control={form.control}
-                name="vinNumber"
+                name="vin"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Αριθμός πλαισίου (VIN)</FormLabel>
@@ -188,7 +209,7 @@ export default function NewCarForm() {
             <div className="col-span-1 md:col-span-6">
               <FormField
                 control={form.control}
-                name="fuelType"
+                name="fuel_type"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Τύπος καυσίμου</FormLabel>
@@ -219,7 +240,7 @@ export default function NewCarForm() {
             <div className="col-span-1 md:col-span-6">
               <FormField
                 control={form.control}
-                name="engineCapacity"
+                name="engine_capacity_cc"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Κυβισμός (cc)</FormLabel>
@@ -246,7 +267,7 @@ export default function NewCarForm() {
             <div className="col-span-1 md:col-span-6">
               <FormField
                 control={form.control}
-                name="horsepower"
+                name="horsepower_hp"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Ιπποδύναμη (HP/PS)</FormLabel>
@@ -275,7 +296,7 @@ export default function NewCarForm() {
             <div className="col-span-1 md:col-span-6">
               <FormField
                 control={form.control}
-                name="transmissionType"
+                name="transmission_type"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Τύπος μετάδοσης</FormLabel>
@@ -289,11 +310,9 @@ export default function NewCarForm() {
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
-                        <SelectItem value="manual">Χειροκίνητο</SelectItem>
-                        <SelectItem value="automatic">Αυτόματο</SelectItem>
-                        <SelectItem value="semiautomatic">
-                          Ημιαυτόματο
-                        </SelectItem>
+                        <SelectItem value="Χειροκίνητο">Χειροκίνητο</SelectItem>
+                        <SelectItem value="Αυτόματο">Αυτόματο</SelectItem>
+                        <SelectItem value="Ημιαυτόματο">Ημιαυτόματο</SelectItem>
                       </SelectContent>
                     </Select>
                     <FormMessage />
@@ -305,7 +324,7 @@ export default function NewCarForm() {
             <div className="col-span-1 md:col-span-6">
               <FormField
                 control={form.control}
-                name="fuelConsumption"
+                name="fuel_consumption_l_per_100km"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Κατανάλωση καυσίμου (λίτρα/100χλμ)</FormLabel>
@@ -315,8 +334,8 @@ export default function NewCarForm() {
                         type="text"
                         {...field}
                         onChange={(e) => {
-                          const input = e.target.value.replace(/\D/g, ""); // Remove non-numeric characters
-                          if (input.length <= 3) {
+                          const input = e.target.value.replace(/[^0-9.]/g, ""); // Allow only numbers and dots
+                          if (/^\d*\.?\d{0,2}$/.test(input)) {
                             field.onChange(input);
                           }
                         }}
