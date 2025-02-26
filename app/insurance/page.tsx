@@ -18,7 +18,10 @@ export default function Insurance() {
       <h1 className="p-6 text-3xl font-bold text-center text-black-600 w-full">
         Οι ασφάλειές μου
       </h1>
-      <NewEventButton text="Νέα ασφάλεια" targetLink="/kteo/newKteo/" />
+      <NewEventButton
+        text="Νέα ασφάλεια"
+        targetLink="/insurance/newInsurance/"
+      />
       <div className="flex flex-row h-screen">
         {!data?.length ? (
           <NoDataErrorPages noData={!data?.length} />
