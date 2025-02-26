@@ -7,13 +7,13 @@ import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 import { format } from "date-fns";
+import { el } from "date-fns/locale";
 import {
   Popover,
   PopoverContent,
@@ -29,22 +29,16 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import {
-  MultiSelector,
-  MultiSelectorContent,
-  MultiSelectorInput,
-  MultiSelectorItem,
-  MultiSelectorList,
-  MultiSelectorTrigger,
-} from "@/components/ui/multi-select";
 import { Textarea } from "@/components/ui/textarea";
+import { useNewService } from "@/hooks/useNewService";
 
 const formSchema = z.object({
   inspection_date: z.coerce.date(),
   date: z.coerce.date(),
   mileage_km: z.string().min(1).optional(),
+  next_service_mileage_km: z.string().min(1).optional(),
   service_type: z.string().optional(),
-  checks: z.array(z.string()).nonempty("Please at least one item"),
+  checks: z.string().optional(),
   cost_eur: z.string().min(1).optional(),
   comments: z.string().optional(),
 });
@@ -53,254 +47,282 @@ export default function NewServiceForm() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      checks: ["React"],
+      checks: "",
       inspection_date: new Date(),
       date: new Date(),
+      mileage_km: "",
+      next_service_mileage_km: "",
+      service_type: "",
+      cost_eur: "",
+      comments: "",
     },
   });
 
+  const { mutate } = useNewService(form.reset);
+
   function onSubmit(values: z.infer<typeof formSchema>) {
-    try {
-      console.log(values);
-      toast(
-        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(values, null, 2)}</code>
-        </pre>
-      );
-    } catch (error) {
-      console.error("Form submission error", error);
-      toast.error("Failed to submit the form. Please try again.");
-    }
+    const formattedValues = {
+      inspection_date: format(values.inspection_date, "dd-MM-yyyy"),
+      next_service: {
+        date: format(values.date, "dd-MM-yyyy"),
+        mileage_km: values.next_service_mileage_km
+          ? values.next_service_mileage_km
+          : "-",
+      },
+      mileage_km: values.mileage_km ? values.mileage_km : "-",
+
+      service_type: values.service_type ? values.service_type : "-",
+      checks: values.checks
+        ? values.checks.split(",").map((check) => check.trim())
+        : [],
+      cost_eur: values.cost_eur ? values.cost_eur : "-",
+      comments: values.comments ? values.comments : "-",
+    };
+    console.log(formattedValues);
+    mutate(formattedValues);
   }
 
   return (
-    <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit(onSubmit)}
-        className="space-y-8 max-w-3xl mx-auto py-10"
-      >
-        <div className="grid grid-cols-12 gap-4">
-          <div className="col-span-6">
-            <FormField
-              control={form.control}
-              name="inspection_date"
-              render={({ field }) => (
-                <FormItem className="flex flex-col">
-                  <FormLabel>Ημ/νία Ελέγχου</FormLabel>
-                  <Popover>
-                    <PopoverTrigger asChild>
-                      <FormControl>
-                        <Button
-                          variant={"outline"}
-                          className={cn(
-                            "w-[240px] pl-3 text-left font-normal",
-                            !field.value && "text-muted-foreground"
-                          )}
-                        >
-                          {field.value ? (
-                            format(field.value, "PPP")
-                          ) : (
-                            <span>Pick a date</span>
-                          )}
-                          <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                        </Button>
-                      </FormControl>
-                    </PopoverTrigger>
-                    <PopoverContent className="w-auto p-0" align="start">
-                      <Calendar
-                        mode="single"
-                        selected={field.value}
-                        onSelect={field.onChange}
-                        initialFocus
+    <div className="rounded-lg border border-gray-300 p-2 max-w-[1000px] mx-auto mb-4">
+      <h1 className="text-center text-2xl font-bold">
+        Καταχώρηση Νέου Service
+      </h1>
+      <Form {...form}>
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="space-y-8 max-w-3xl mx-auto py-10"
+        >
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
+            <div className="col-span-1 md:col-span-6">
+              <FormField
+                control={form.control}
+                name="inspection_date"
+                render={({ field }) => (
+                  <FormItem className="flex flex-col">
+                    <FormLabel>Ημ/νία Ελέγχου</FormLabel>
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <FormControl>
+                          <Button
+                            variant={"outline"}
+                            className={cn(
+                              "w-[240px] pl-3 text-left font-normal",
+                              !field.value && "text-muted-foreground"
+                            )}
+                          >
+                            {field.value ? (
+                              format(field.value, "PPP", { locale: el })
+                            ) : (
+                              <span>Pick a date</span>
+                            )}
+                            <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                          </Button>
+                        </FormControl>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-auto p-0" align="start">
+                        <Calendar
+                          mode="single"
+                          selected={field.value}
+                          onSelect={field.onChange}
+                          initialFocus
+                          locale={el}
+                        />
+                      </PopoverContent>
+                    </Popover>
+
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+
+            <div className="col-span-1 md:col-span-6">
+              <FormField
+                control={form.control}
+                name="date"
+                render={({ field }) => (
+                  <FormItem className="flex flex-col">
+                    <FormLabel> Ημ/νία Επόμενου Service</FormLabel>
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <FormControl>
+                          <Button
+                            variant={"outline"}
+                            className={cn(
+                              "w-[240px] pl-3 text-left font-normal",
+                              !field.value && "text-muted-foreground"
+                            )}
+                          >
+                            {field.value ? (
+                              format(field.value, "PPP", { locale: el })
+                            ) : (
+                              <span>Pick a date</span>
+                            )}
+                            <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                          </Button>
+                        </FormControl>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-auto p-0" align="start">
+                        <Calendar
+                          mode="single"
+                          selected={field.value}
+                          onSelect={field.onChange}
+                          initialFocus
+                          locale={el}
+                        />
+                      </PopoverContent>
+                    </Popover>
+
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
+            <div className="col-span-1 md:col-span-6">
+              <FormField
+                control={form.control}
+                name="next_service_mileage_km"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Επόμενο Service (σε χλμ)</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="Χιλιόμετρα επόμενου service"
+                        type="text"
+                        {...field}
+                        onChange={(e) => {
+                          const input = e.target.value.replace(/\D/g, ""); // Remove non-numeric characters
+                          if (input.length <= 6) {
+                            field.onChange(input);
+                          }
+                        }}
                       />
-                    </PopoverContent>
-                  </Popover>
+                    </FormControl>
 
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </div>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
 
-          <div className="col-span-6">
-            <FormField
-              control={form.control}
-              name="date"
-              render={({ field }) => (
-                <FormItem className="flex flex-col">
-                  <FormLabel> Ημ/νία Επόμενου Service</FormLabel>
-                  <Popover>
-                    <PopoverTrigger asChild>
-                      <FormControl>
-                        <Button
-                          variant={"outline"}
-                          className={cn(
-                            "w-[240px] pl-3 text-left font-normal",
-                            !field.value && "text-muted-foreground"
-                          )}
-                        >
-                          {field.value ? (
-                            format(field.value, "PPP")
-                          ) : (
-                            <span>Pick a date</span>
-                          )}
-                          <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                        </Button>
-                      </FormControl>
-                    </PopoverTrigger>
-                    <PopoverContent className="w-auto p-0" align="start">
-                      <Calendar
-                        mode="single"
-                        selected={field.value}
-                        onSelect={field.onChange}
-                        initialFocus
+            <div className="col-span-1 md:col-span-6">
+              <FormField
+                control={form.control}
+                name="mileage_km"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Χιλιόμετρα</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="Ένδειξη χιλιομέτρων κατά τον έλεγχο"
+                        type="text"
+                        {...field}
+                        onChange={(e) => {
+                          const input = e.target.value.replace(/\D/g, ""); // Remove non-numeric characters
+                          if (input.length <= 6) {
+                            field.onChange(input);
+                          }
+                        }}
                       />
-                    </PopoverContent>
-                  </Popover>
+                    </FormControl>
 
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </div>
-        </div>
-
-        <div className="grid grid-cols-12 gap-4">
-          <div className="col-span-6">
-            <FormField
-              control={form.control}
-              name="mileage_km"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Επόμενο Service (σε χλμ)</FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder="Χιλιόμετρα επόμενου service"
-                      type="text"
-                      {...field}
-                    />
-                  </FormControl>
-
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
           </div>
 
-          <div className="col-span-6">
-            <FormField
-              control={form.control}
-              name="mileage_km"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Χιλιόμετρα</FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder="Ένδειξη χιλιομέτρων κατά τον έλεγχο"
-                      type=""
-                      {...field}
-                    />
-                  </FormControl>
-
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </div>
-        </div>
-
-        <FormField
-          control={form.control}
-          name="service_type"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Τύπος Service</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
-                <FormControl>
-                  <SelectTrigger>
-                    <SelectValue placeholder="" />
-                  </SelectTrigger>
-                </FormControl>
-                <SelectContent>
-                  <SelectItem value="m@example.com">m@example.com</SelectItem>
-                  <SelectItem value="m@google.com">m@google.com</SelectItem>
-                  <SelectItem value="m@support.com">m@support.com</SelectItem>
-                </SelectContent>
-              </Select>
-
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
-          name="checks"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Έλεγχοι</FormLabel>
-              <FormControl>
-                <MultiSelector
-                  values={field.value}
-                  onValuesChange={field.onChange}
-                  loop
-                  className="max-w-xs"
+          <FormField
+            control={form.control}
+            name="service_type"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Τύπος Service</FormLabel>
+                <Select
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
                 >
-                  <MultiSelectorTrigger>
-                    <MultiSelectorInput placeholder="Select languages" />
-                  </MultiSelectorTrigger>
-                  <MultiSelectorContent>
-                    <MultiSelectorList>
-                      <MultiSelectorItem value={"React"}>
-                        React
-                      </MultiSelectorItem>
-                      <MultiSelectorItem value={"Vue"}>Vue</MultiSelectorItem>
-                      <MultiSelectorItem value={"Svelte"}>
-                        Svelte
-                      </MultiSelectorItem>
-                    </MultiSelectorList>
-                  </MultiSelectorContent>
-                </MultiSelector>
-              </FormControl>
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Επιλέξτε τύπο Service" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    <SelectItem value="Γενικό">Γενικό</SelectItem>
+                    <SelectItem value="Περιοδικό">Περιοδικό</SelectItem>
+                    <SelectItem value="Έκτακτο">Έκτακτο</SelectItem>
+                  </SelectContent>
+                </Select>
 
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-        <FormField
-          control={form.control}
-          name="cost_eur"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Κόστος (€)</FormLabel>
-              <FormControl>
-                <Input placeholder="Κόστος service" type="" {...field} />
-              </FormControl>
-              <FormDescription>
-                This is your public display name.
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+          <FormField
+            control={form.control}
+            name="checks"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Αλλαγές</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="Συμπληρώστε τις αλλαγές με κόμμα (π.χ Λάδια, Φίλτρο αέρα)"
+                    type="text"
+                    {...field}
+                  />
+                </FormControl>
 
-        <FormField
-          control={form.control}
-          name="comments"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Παρατηρήσεις</FormLabel>
-              <FormControl>
-                <Textarea placeholder="" className="resize-none" {...field} />
-              </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <Button type="submit">Submit</Button>
-      </form>
-    </Form>
+          <FormField
+            control={form.control}
+            name="cost_eur"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Κόστος (€)</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="Κόστος service"
+                    type="text"
+                    {...field}
+                    onChange={(e) => {
+                      const input = e.target.value.replace(/\D/g, ""); // Remove non-numeric characters
+                      if (input.length <= 4) {
+                        field.onChange(input);
+                      }
+                    }}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="comments"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Παρατηρήσεις</FormLabel>
+                <FormControl>
+                  <Textarea placeholder="" className="resize-none" {...field} />
+                </FormControl>
+
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <Button type="submit">Καταχώρηση</Button>
+        </form>
+      </Form>
+    </div>
   );
 }
