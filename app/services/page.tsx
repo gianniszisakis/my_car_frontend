@@ -18,7 +18,7 @@ export default function Services() {
       <h1 className="p-6 text-3xl font-bold text-center text-black-600 w-full">
         Τα service μου
       </h1>
-      <NewEventButton text="Νέο service" targetLink="/kteo/newKteo/" />
+      <NewEventButton text="Νέο service" targetLink="/services/newService/" />
       <div className="flex flex-row h-screen">
         {!data?.length ? (
           <NoDataErrorPages noData={!data?.length} />
