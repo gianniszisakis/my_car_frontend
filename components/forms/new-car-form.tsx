@@ -223,10 +223,10 @@ export default function NewCarForm() {
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
-                        <SelectItem value="petrol">Βενζίνη</SelectItem>
-                        <SelectItem value="diesel">Πετρέλαιο</SelectItem>
-                        <SelectItem value="electric">Ηλεκτρικό</SelectItem>
-                        <SelectItem value="gas">Αέριο</SelectItem>
+                        <SelectItem value="Βενζίνη">Βενζίνη</SelectItem>
+                        <SelectItem value="Πετρέλαιο">Πετρέλαιο</SelectItem>
+                        <SelectItem value="Ηλεκτρικό">Ηλεκτρικό</SelectItem>
+                        <SelectItem value="Αέριο">Αέριο</SelectItem>
                       </SelectContent>
                     </Select>
                     <FormMessage />
