@@ -18,6 +18,9 @@ export const useNewVehicle = (formReset: () => void) => {
         description: `Το όχημα καταχωρήθηκε επιτυχώς!`,
       });
       formReset(); // Reset the form after successful submission
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000); //reload the page after 1 second
     },
     onError: (error) => {
       toast({
