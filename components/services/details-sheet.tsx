@@ -65,7 +65,7 @@ export default function ServiceDetailsSheet({
           <div className="grid grid-cols-2 items-center">
             <p>
               {service?.next_service?.mileage_km
-                ? `σε ${service?.next_service?.mileage_km} km/h`
+                ? `στα ${service?.next_service?.mileage_km} χλμ`
                 : "-"}
             </p>
             <p>
