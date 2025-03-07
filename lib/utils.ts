@@ -2,6 +2,7 @@ import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 import { parse, differenceInDays } from "date-fns";
 import { statusColorMap } from "./colorMapper";
+import { CarLogo } from "@/models/carLogosModel";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -34,4 +35,15 @@ export function getExpirationStatus(expirationDate: string) {
 export function getStatusBadgeColor(status: string) {
   //const status = getExpirationStatus(statusApi);
   return statusColorMap[status] || "bg-blue-500";
+}
+
+export function getCarLogo(brand: string | undefined, carLogo: CarLogo[]) {
+  if (!carLogo || !brand) return null;
+  const carName = brand.toLowerCase();
+  const logo = carLogo.find((logo: any) => logo.slug === carName);
+  if (logo) {
+    return logo?.image?.source;
+  } else {
+    return null;
+  }
 }
