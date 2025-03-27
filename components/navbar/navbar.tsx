@@ -8,6 +8,8 @@ import {
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Menu, Car } from "lucide-react";
+import { UserAvatar, MobileUserAvatar } from "./user-avatar";
+import { signOut } from "next-auth/react";
 
 export default function Navbar() {
   const sheetStyles =
@@ -29,6 +31,7 @@ export default function Navbar() {
           <SheetDescription>
             Διαχειριστείτε όλες τις ενέργειες του αυτοκινήτου σας.
           </SheetDescription>
+          <MobileUserAvatar />
           <Link href="/" className="mr-6 hidden lg:flex" prefetch={false}>
             <Car className="h-6 w-6" />
           </Link>
@@ -53,13 +56,21 @@ export default function Navbar() {
             <Link href="/kteo" className={sheetStylesMobile} prefetch={false}>
               Τα ΚΤΕΟ μου
             </Link>
+            <Link
+              href="/profile"
+              className={sheetStylesMobile}
+              prefetch={false}
+            >
+              Τα προφίλ μου
+            </Link>
+            <Button onClick={() => signOut()}>Αποσύνδεση</Button>
           </div>
         </SheetContent>
       </Sheet>
       <Link href="/" className="mr-6 hidden lg:flex" prefetch={false}>
         <Car />
       </Link>
-      <nav className="ml-auto hidden lg:flex gap-6">
+      <nav className="ml-auto hidden lg:flex gap-6 pr-4">
         <Link href="/" className={sheetStyles} prefetch={false}>
           Αρχική
         </Link>
@@ -73,6 +84,7 @@ export default function Navbar() {
           Τα ΚΤΕΟ μου
         </Link>
       </nav>
+      <UserAvatar />
     </header>
   );
 }
