@@ -11,7 +11,6 @@ import { useSession } from "next-auth/react";
 export default function VehicleMaintenanceData() {
   //Get user data from session
   const { data: session, status } = useSession();
-  console.log("Session Data", session);
   /* API calls */
   const {
     data: insuranceData,
