@@ -5,6 +5,15 @@ import {
   SheetTitle,
   SheetDescription,
 } from "@/components/ui/sheet";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Menu, Car } from "lucide-react";
@@ -74,7 +83,7 @@ export default function Navbar() {
       <Link href="/" className="mr-6 hidden lg:flex" prefetch={false}>
         <Car />
       </Link>
-      <nav className="ml-auto hidden lg:flex gap-6 pt-1 pr-4">
+      <nav className="ml-auto hidden lg:flex gap-6 pr-4">
         <Link href="/" className={sheetStyles} prefetch={false}>
           Αρχική
         </Link>
@@ -88,10 +97,24 @@ export default function Navbar() {
           Τα ΚΤΕΟ μου
         </Link>
       </nav>
-      <Avatar>
-        <AvatarImage src={session?.user?.image ?? ""} />
-        <AvatarFallback>NA</AvatarFallback>
-      </Avatar>
+      <div className="pr-4">
+        <DropdownMenu>
+          <DropdownMenuTrigger>
+            <Avatar>
+              <AvatarImage src={session?.user?.image ?? ""} />
+              <AvatarFallback>NA</AvatarFallback>
+            </Avatar>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent>
+            <DropdownMenuLabel>
+              {session?.user?.name ? session?.user?.name : "My Account"}
+            </DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem>Profile</DropdownMenuItem>
+            <DropdownMenuItem>Sign Out</DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </div>
     </header>
   );
 }
