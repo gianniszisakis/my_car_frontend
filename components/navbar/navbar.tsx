@@ -74,7 +74,7 @@ export default function Navbar() {
       <Link href="/" className="mr-6 hidden lg:flex" prefetch={false}>
         <Car />
       </Link>
-      <nav className="ml-auto hidden lg:flex gap-6">
+      <nav className="ml-auto hidden lg:flex gap-6 pt-1 pr-4">
         <Link href="/" className={sheetStyles} prefetch={false}>
           Αρχική
         </Link>
@@ -87,11 +87,11 @@ export default function Navbar() {
         <Link href="/kteo" className={sheetStyles} prefetch={false}>
           Τα ΚΤΕΟ μου
         </Link>
-        <Avatar>
-          <AvatarImage src={session?.user?.image ?? ""} />
-          <AvatarFallback>NA</AvatarFallback>
-        </Avatar>
       </nav>
+      <Avatar>
+        <AvatarImage src={session?.user?.image ?? ""} />
+        <AvatarFallback>NA</AvatarFallback>
+      </Avatar>
     </header>
   );
 }
