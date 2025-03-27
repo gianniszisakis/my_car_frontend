@@ -20,5 +20,5 @@ export async function middleware(req: NextRequest) {
 
 // This ensures that the middleware applies to all routes in your app
 export const config = {
-  matcher: ["/", "/insurance", "/services", "/kteo"], // Protected routes
+  matcher: ["/", "/insurance", "/services", "/kteo", "/profile"], // Protected routes
 };
