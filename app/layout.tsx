@@ -7,6 +7,7 @@ import Navbar from "@/components/navbar/navbar";
 import { Toaster } from "@/components/ui/toaster";
 
 import "./globals.css";
+import { SessionProvider } from "next-auth/react";
 
 const queryClient = new QueryClient();
 
@@ -18,15 +19,17 @@ export default function RootLayout({
   // Ensure the QueryClient persists across re-renders
   const [client] = useState(() => new QueryClient());
   return (
-    <html lang="en">
-      <body>
-        <QueryClientProvider client={client}>
-          <Navbar />
-          <main>{children}</main>
-          <Toaster />
-          <ReactQueryDevtools initialIsOpen={false} />
-        </QueryClientProvider>
-      </body>
-    </html>
+    <SessionProvider>
+      <html lang="en">
+        <body>
+          <QueryClientProvider client={client}>
+            <Navbar />
+            <main>{children}</main>
+            <Toaster />
+            <ReactQueryDevtools initialIsOpen={false} />
+          </QueryClientProvider>
+        </body>
+      </html>
+    </SessionProvider>
   );
 }
