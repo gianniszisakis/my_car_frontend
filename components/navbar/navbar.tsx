@@ -97,7 +97,7 @@ export default function Navbar() {
           Τα ΚΤΕΟ μου
         </Link>
       </nav>
-      <div className="pr-4">
+      <div className="pr-4 hidden lg:flex">
         <DropdownMenu>
           <DropdownMenuTrigger>
             <Avatar>
