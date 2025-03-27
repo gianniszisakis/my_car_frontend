@@ -5,8 +5,10 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { useState } from "react";
 import Navbar from "@/components/navbar/navbar";
 import { Toaster } from "@/components/ui/toaster";
+import { usePathname } from "next/navigation";
 
 import "./globals.css";
+import { SessionProvider } from "next-auth/react";
 
 const queryClient = new QueryClient();
 
@@ -17,16 +19,22 @@ export default function RootLayout({
 }>) {
   // Ensure the QueryClient persists across re-renders
   const [client] = useState(() => new QueryClient());
+  const pathname = usePathname();
+
+  //hide the navbar when user is not logged in
+  const isLoginPage = pathname === "/login";
   return (
-    <html lang="en">
-      <body>
-        <QueryClientProvider client={client}>
-          <Navbar />
-          <main>{children}</main>
-          <Toaster />
-          <ReactQueryDevtools initialIsOpen={false} />
-        </QueryClientProvider>
-      </body>
-    </html>
+    <SessionProvider>
+      <html lang="en">
+        <body>
+          <QueryClientProvider client={client}>
+            {!isLoginPage && <Navbar />}
+            <main>{children}</main>
+            <Toaster />
+            <ReactQueryDevtools initialIsOpen={false} />
+          </QueryClientProvider>
+        </body>
+      </html>
+    </SessionProvider>
   );
 }
