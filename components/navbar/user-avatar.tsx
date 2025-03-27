@@ -28,10 +28,10 @@ export function UserAvatar() {
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
           <Link href="/profile">
-            <DropdownMenuItem>Profile</DropdownMenuItem>
+            <DropdownMenuItem>Προφίλ</DropdownMenuItem>
           </Link>
           <DropdownMenuItem onClick={() => signOut()}>
-            Sign Out
+            Αποσύνδεση
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
