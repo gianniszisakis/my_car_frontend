@@ -6,11 +6,11 @@ import { useAllService } from "@/hooks/useAllServices";
 import { getStatusBadgeColor } from "@/lib/utils";
 import { SkeletonLoadingPage } from "../loading-error/loading-cards";
 import ErrorCard from "../loading-error/error-card";
-import { useSession } from "next-auth/react";
+import { useProfile } from "@/context/ProfileContext";
 
 export default function VehicleMaintenanceData() {
-  //Get user data from session
-  const { data: session, status } = useSession();
+  //Get user data from contextAPI
+  const { user } = useProfile();
   /* API calls */
   const {
     data: insuranceData,
@@ -39,9 +39,9 @@ export default function VehicleMaintenanceData() {
 
   return (
     <>
-      {session?.user?.name ? (
+      {user?.name ? (
         <div className="flex flex-row p-6">
-          <h1 className="text-2xl font-semibold">{`Καλωσόρισες ${session?.user?.name}`}</h1>
+          <h1 className="text-2xl font-semibold">{`Καλωσόρισες ${user?.name}`}</h1>
         </div>
       ) : null}
       <div className="flex flex-col lg:flex-row h-screen">
