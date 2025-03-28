@@ -9,6 +9,7 @@ import { usePathname } from "next/navigation";
 
 import "./globals.css";
 import { SessionProvider } from "next-auth/react";
+import { ProfileProvider } from "@/context/ProfileContext";
 
 const queryClient = new QueryClient();
 
@@ -28,9 +29,11 @@ export default function RootLayout({
       <html lang="en">
         <body>
           <QueryClientProvider client={client}>
-            {!isLoginPage && <Navbar />}
-            <main>{children}</main>
-            <Toaster />
+            <ProfileProvider>
+              {!isLoginPage && <Navbar />}
+              <main>{children}</main>
+              <Toaster />
+            </ProfileProvider>
             <ReactQueryDevtools initialIsOpen={false} />
           </QueryClientProvider>
         </body>
